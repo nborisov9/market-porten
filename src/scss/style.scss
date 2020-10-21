@@ -318,23 +318,6 @@ li {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // porten =================================================
 
 .porten {
@@ -554,6 +537,7 @@ li {
 		padding: 15px 0px 0px 0px;
 		color: white;
 		display: block;
+		letter-spacing: 1px;
 		@media(max-width: 1160px){
 			padding: 0px 0px 0px 0px;
 			margin: 80px 0px 0px -70px;
@@ -760,6 +744,7 @@ li {
 		display: flex;
 		flex-wrap: wrap;
 		margin: 20px 12px 0px 12px;
+		padding: 0px 0px 55px 0px;
 		justify-content: center;
 		@media(max-width: 450px){
 			margin: 0px 12px 0px 12px;
@@ -782,6 +767,7 @@ li {
 			height: 200px;
 			width: 200px;
 			background: #191B1C;
+			padding: 12px;
 		}
 	}
 	// .col-arrival__body
@@ -799,6 +785,7 @@ li {
 	// .body-arrival__price
 	&__price {
 		margin: 10px 0px 0px 0px;
+		letter-spacing: 1px;
 		display: block;
 		color: white;
 	}
