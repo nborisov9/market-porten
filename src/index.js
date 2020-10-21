@@ -21,7 +21,7 @@ import './assets/arrival-6.jpg'
 
 
 
-// ibg ============================
+// ibg ================
 function ibg() {
 	const ibg = document.querySelectorAll('.ibg')
 		for (let i = 0; i < ibg.length; i++) {
@@ -44,8 +44,13 @@ iconMenu.addEventListener('click', () => {
 	menuBody.classList.toggle('active')
 	iconSocial.classList.toggle('active')
 })
+// =========
 
 
+
+function html(nodeList, html) {
+	nodeList.innerHTML = html
+}
 
 const collContainer = document.querySelector('.prod__body')
 const arrivalContainer = document.querySelector('.arrival__row')
@@ -102,7 +107,6 @@ const arrivalTemplate = arrivalData.map(({title, price, id}) => {
 	`
 })
 
-
 const brandsTemplate = brandsData.map(({id}) => {
 	return `
 		<a href="" class="brands__image">
@@ -111,7 +115,6 @@ const brandsTemplate = brandsData.map(({id}) => {
 	`
 })
 
-
-collContainer.innerHTML = collTemplate.join('')
-arrivalContainer.innerHTML = arrivalTemplate.join('')
-brandsContainer.innerHTML = brandsTemplate.join('')
+html(collContainer, collTemplate.join(''))
+html(arrivalContainer, arrivalTemplate.join(''))
+html(brandsContainer, brandsTemplate.join(''))
