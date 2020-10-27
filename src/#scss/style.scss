@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,400;0,700;1,400&family=Questrial&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,400;0,700;1,400&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,300&display=swap');
 //<Подключаем шрифты>=======================================================================================
 
 //<ПЕРЕМЕННЫЕ>===========================================================================================================
@@ -73,15 +73,15 @@ li {
 		position: relative;
 	}
 	
-	.ibg img{	
-		width: 0;
-		height: 0;
-		position: absolute;
-		top: 0;
-		left: 0;
-		opacity: 0;
-		visibility: hidden;
-	}
+.ibg img{	
+	width: 0;
+	height: 0;
+	position: absolute;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	visibility: hidden;
+}
 
 // forms ============================================================================
 
@@ -125,6 +125,13 @@ li {
 		font-size: 35px;
 		font-family: "Orbitron";
 
+		transition: color .2s linear;
+		@media(min-width: 992px){
+			&:hover {
+				color: rgb(156, 156, 156);
+			}
+		}
+
 		@media(max-width: 767px) {
 			position: absolute;
 			top: 50%;
@@ -158,13 +165,12 @@ li {
 			top: 0;
 			padding: 115px 0 20px 0;
 			overflow: auto;
-			opacity: 0; // скрываем содержимое меню
-			visibility: hidden; // скрываем содержимое меню
-			transition: all 0.3s ease; // animation
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.3s ease;
 
 
 			&:after {
-				// чтобы меню не перекрывало шапку
 				content: "";
 				background-color: #474747;
 				position: fixed;
@@ -191,7 +197,7 @@ li {
 		}
 
 		@media(max-width: 767px) {
-			display: block; // для бургера
+			display: block;
 
 			li {
 				margin: 0 0 30px 0;
@@ -209,12 +215,28 @@ li {
 		font-family: "Ubuntu";
 		text-transform: uppercase;
 		letter-spacing: 1.4px;
+		position: relative;
 
-		@media (min-width: 992px) {
-			&:hover {
-				text-decoration: underline;
-			}
+		@media(min-width: 992px) {
+		&:after{
+			content:'';
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 0;
+			height: 1px;
+			background: white;
+			transition: all 0.3s linear;
 		}
+
+		&:hover{			
+			color:white;
+			&:after{
+				content:'';
+				width: 100%;
+			}		
+		}
+	}
 
 		@media(max-width: 767px) {
 			font-size: 20px;
@@ -421,6 +443,128 @@ li {
 	}
 }
 
+// slider =====================================
+.slider-product {
+	position: relative;
+	padding: 50px 0px 80px 0px;
+	background: rgb(63, 63, 63);
+	// .slider-product__title
+	&__title {
+		text-align: center;
+		color: white;
+		text-transform: uppercase;
+		font-family: "Ubuntu";
+		font-size: 30px;
+		padding: 0px 0px 20px 0px;
+	}
+	// .slider-product__wrapper
+	&__wrapper {
+		width: 1030px;
+		margin: 0 auto;
+		overflow: hidden;
+	}
+
+	// .slider-product__inner
+	&__inner {
+		display: flex;
+		transition: transform .5s linear;
+	}
+}
+.counter-slider {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 50%;
+	width: 1130px;
+	margin: 0 auto;
+
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+	color: rgb(184, 181, 181);
+	// .counter-slider__prev
+	&__prev {
+		width: 48px;
+		height: 48px;
+		border-color: #000;
+		position: absolute;
+		top: 50%;
+		margin-top: -31px;
+		border-bottom: 6px solid;
+		border-left: 6px solid;
+		transform: rotate(45deg);
+		left: 10px;
+	}
+	// .counter-slider__next
+	&__next {
+		width: 48px;
+		height: 48px;
+		border-color: #000;
+		position: absolute;
+		top: 50%;
+		margin-top: -31px;
+		border-bottom: 6px solid;
+		border-left: 6px solid;
+		transform: rotate(-135deg);
+		right: 10px;
+	}
+}
+.slide-product {
+	padding: 0px 20px;
+	text-align: center;
+	// .slide-product__title
+	&__title {
+		padding: 15px 0px 0px 0px;
+		color: white;
+		display: block;
+		font-size: 30px;
+		font-family: "Kanit";
+		@media(min-width: 992px){
+			transition: color .2s linear;
+			&:hover {
+				color: rgb(255, 226, 226);
+			}
+	  	}
+	}
+	// .slide-product__image
+	&__image {
+		image-rendering: optimizeQuality;
+
+		img {
+			width: 214px;
+			height: 214px;
+		}
+	}
+	// .slide-product__price
+	&__price {
+		padding: 10px 0px 0px 0px;
+		color: white;
+		letter-spacing: 1px;
+		font-family: "Kanit";
+		font-size: 20px;
+	}
+}
+
+.btn-slider {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	text-align: center;
+	padding: 0px 0px 50px 0px;
+	a {
+		color: white;
+		padding: 5px 0px;
+		font-family: 'Roboto', sans-serif;
+		font-size: 19px;
+		text-transform: uppercase;
+		&:first-child {
+			padding: 0px;
+		}
+	}
+}
+
+
 // catalog ====================================
 
 .collection {
@@ -480,10 +624,6 @@ li {
 			font-size: 30px;
 		}
 	}
-	// .prod__item
-	&__item {
-
-	}
 }
 .item-prod {
 	font-size: 18px;
@@ -498,6 +638,12 @@ li {
 
 	// .item-prod__img
 	&__img {
+		transition: transform .15s linear;
+		@media(min-width: 992px){
+			&:hover {
+				transform: scale(1.035);
+			}
+		}
 		padding: 0px 12px;
 		@media(max-width: 1160px){
 			 padding: 12px 0px;
@@ -525,6 +671,12 @@ li {
 		padding: 15px 0px 0px 0px;
 		color: white;
 		display: block;
+		@media(min-width: 992px){
+			transition: color .2s linear;
+			&:hover {
+				color: rgb(255, 226, 226);
+			}
+	  	}
 		@media(max-width: 1160px){
 			 padding: 50px 0px 0px 10px;
 		}
@@ -768,6 +920,12 @@ li {
 			width: 200px;
 			background: #191B1C;
 			padding: 12px;
+			transition: transform .15s linear;
+			@media(min-width: 992px) {
+				&:hover {
+					transform: scale(1.035);
+				}
+			}
 		}
 	}
 	// .col-arrival__body
@@ -781,6 +939,12 @@ li {
 		margin: 20px 0px 0px 0px;
 		display: block;
 		color: white;
+		@media(min-width: 992px) { 
+			transition: color .2s linear;
+			&:hover {
+				color: rgb(255, 226, 226);
+			}
+		}
 	}
 	// .body-arrival__price
 	&__price {
@@ -820,6 +984,12 @@ li {
 		img {
 			width: 240px;
 			height: 94px;
+			transition: transform .15s linear;
+			@media(min-width: 992px) {
+				&:hover {
+					transform: scale(1.05);
+				}
+			}
 		}
 	}
 }

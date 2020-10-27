@@ -1,38 +1,11 @@
-import './scss/style.scss'
-import './assets/porten.jpg'
+import {ibg, html, importAll} from './utils/utils'
+import {collData, arrivalData, brandsData, prodocutData} from './db/db'
 
-import './assets/collection-0.jpg'
-import './assets/collection-1.jpg'
-import './assets/collection-2.jpg'
-import './assets/collection-21.jpg'
-import './assets/watch-collection-1.jpg'
+import './#scss/style.scss'
+// ======================================
 
-import './assets/brand-1.png'
-import './assets/line.png'
-import './assets/aboutus-1.jpg'
-
-import './assets/arrival-0.jpg'
-import './assets/arrival-1.jpg'
-import './assets/arrival-2.jpg'
-import './assets/arrival-3.jpg'
-import './assets/arrival-4.jpg'
-import './assets/arrival-5.jpg'
-import './assets/arrival-6.jpg'
-
-
-
-// ibg ================
-function ibg() {
-	const ibg = document.querySelectorAll('.ibg')
-		for (let i = 0; i < ibg.length; i++) {
-			if (ibg[i].querySelector('img')) {
-				ibg[i].style.backgroundImage = 'url(' + ibg[i].querySelector('img').getAttribute('src') + ')'
-			}
-		}
-	}
-
+importAll(require.context('./assets', false, /\.(png|jpe?g|svg|gif)$/))
 ibg()
-
 
 // burgerMenu
 const iconMenu = document.querySelector('.icon-menu')
@@ -46,38 +19,11 @@ iconMenu.addEventListener('click', () => {
 })
 // =========
 
-
-
-function html(nodeList, html) {
-	nodeList.innerHTML = html
-}
-
+const sliderContainer = document.querySelector('.slider-product__inner')
 const collContainer = document.querySelector('.prod__body')
 const arrivalContainer = document.querySelector('.arrival__row')
 const brandsContainer = document.querySelector('.brands__row')
 
-
-const collData = [{title: 'Louis XVI ATHOS', price: 165.333, id: 0},
-	{title: 'Adriatica', price: 99.999, id: 1},
-	{title: 'Cover', price: 49.111, id: 2}
-]
-
-const arrivalData = [
-	{title: 'Q&Q', price: 165.333, id: 0},
-	{title: 'CASIO', price: 99.999, id: 1},
-	{title: 'Louis XVI ATHOS', price: 49.111, id: 2},
-	{title: 'Adriatica', price: 23.255, id: 3},
-	{title: 'JACQUES LEMANS', price: 37.111, id: 4},
-	{title: 'PIERRE LANNIER', price: 26.111, id: 5},
-	{title: 'TIMEX', price: 149.999, id: 6}
-]
-
-const brandsData = [
-	{id: 1},
-	{id: 1},
-	{id: 1},
-	{id: 1},
-]
 
 const collTemplate = collData.map(({title, price, id}) => {
 	return `
@@ -115,6 +61,73 @@ const brandsTemplate = brandsData.map(({id}) => {
 	`
 })
 
+const productTemplate = prodocutData.map(({title, price, id}) => {
+	return `
+		<div class="slider-product__slide slide-product">
+			<a href="" class="slide-product__image">
+				<img src="assets/arrival-${id}.jpg" alt="">
+			</a>
+			<a href="" class="slide-product__title">
+				${title}
+			</a>
+			<div class="slide-product__price">
+				${price}
+			</div>
+		</div>
+	`
+})
+
+html(sliderContainer, productTemplate.join(''))
 html(collContainer, collTemplate.join(''))
 html(arrivalContainer, arrivalTemplate.join(''))
 html(brandsContainer, brandsTemplate.join(''))
+
+
+// slider
+const slideProduct = document.querySelectorAll('.slide-product')
+const prevProduct = document.querySelector('.counter-slider__prev')
+const nextProduct = document.querySelector('.counter-slider__next')
+const wrapperProduct = document.querySelector('.slider-product__wrapper')
+const innerProduct = document.querySelector('.slider-product__inner')
+const wrapperWidth = window.getComputedStyle(wrapperProduct).width
+
+let offset = 0
+const valueWidth = wrapperWidth.length - 2
+const maxWidth = +wrapperWidth.slice(0, valueWidth) * Math.floor(slideProduct.length / 4)
+
+nextProduct.addEventListener('click', () => {
+	if (offset === maxWidth) {
+		offset = 0
+	} else {
+		offset += +wrapperWidth.slice(0, valueWidth)
+	}
+	innerProduct.style.transform = `translateX(-${offset}px)`
+})
+
+prevProduct.addEventListener('click', () => {
+	if (offset === 0) {
+		offset = maxWidth
+	} else {
+		offset -= +wrapperWidth.slice(0, valueWidth)
+	}
+	innerProduct.style.transform = `translateX(-${offset}px)`
+})
+
+
+
+// ===========
+function sortPriceAsc(arr) {
+	const data = JSON.parse(JSON.stringify(arr))
+	data.sort((a, b) => a.price > b.price ? 1 : -1)
+	console.log(data);
+}
+
+function sortPriceDesc(arr) {
+	const data = JSON.parse(JSON.stringify(arr))
+	data.sort((a, b) => a.price > b.price ? -1 : 1)
+	console.log(data);
+}
+
+sortPriceAsc(prodocutData)
+sortPriceDesc(prodocutData)
+
