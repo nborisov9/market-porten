@@ -548,21 +548,50 @@ li {
 
 .btn-slider {
 	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	text-align: center;
+	justify-content: center;
 	padding: 0px 0px 50px 0px;
-	a {
+	text-transform: uppercase;
+	// .btn-slider__asc
+	&__asc {
+		cursor: pointer;
+		display: flex;
+		align-items: center;
 		color: white;
-		padding: 5px 0px;
-		font-family: 'Roboto', sans-serif;
-		font-size: 19px;
-		text-transform: uppercase;
-		&:first-child {
-			padding: 0px;
+		i {
+			margin: 0px 30px 0px 0px;
+			font-size: 30px;
+		}
+		@media(min-width: 992px){
+			 &:hover {
+				color: rgb(255, 97, 97);
+			 }
 		}
 	}
+	// .btn-slider__sort
+	&__sort {
+		font-family: "Roboto";
+		font-size: 30px;
+		color: white;
+	}
+	// .btn-slider__desc
+	&__desc {
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		color: white;
+		i {
+			margin: 0px 0px 0px 30px;
+			align-items: center;
+			font-size: 30px;
+		}
+		@media(min-width: 992px){
+			&:hover {
+			  color:rgb(255, 97, 97);
+			}
+	  }
+	}
 }
+
 
 
 // catalog ====================================

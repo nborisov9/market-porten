@@ -9,7 +9,7 @@ export function ibg() {
 
 
 export function html(nodeList, html) {
-	nodeList.innerHTML = html
+	nodeList.insertAdjacentHTML('beforeend', html)
 }
 
 

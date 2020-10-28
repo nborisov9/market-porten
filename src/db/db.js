@@ -21,14 +21,14 @@ export const brandsData = [
 ]
 
 export const prodocutData = [
-	{title: 'CASIO1', price: 1000, id: 2},
-	{title: 'CASIO2', price: 5000, id: 2},
-	{title: 'CASIO3', price: 2000, id: 2},
-	{title: 'CASIO4', price: 3000, id: 2},
-	{title: 'CASIO5', price: 4000, id: 2},
-	{title: 'CASIO6', price: 7000, id: 2},
-	{title: 'CASIO7', price: 9000, id: 2},
-	{title: 'CASIO8', price: 8000, id: 2},
-	{title: 'CASIO9', price: 11000, id: 2},
-	{title: 'CASIO10', price: 10000, id: 2},
+	{title: 'CASIO', price: 19999, id: 1},
+	{title: 'Q&Q', price: 30000, id: 2},
+	{title: 'Atlantic', price: 15000, id: 3},
+	{title: 'JACQUES', price: 59900, id: 4},
+	{title: 'PIERRE', price: 63999, id: 5},
+	{title: 'TIMEX', price: 89000, id: 6},
+	{title: 'ROYAL', price: 111000, id: 7},
+	{title: 'TISSOT', price: 199000, id: 8},
+	{title: 'FOSSIL', price: 80000, id: 9},
+	{title: 'CERTINA', price: 29999, id: 10},
 ]
