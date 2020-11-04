@@ -37,7 +37,7 @@ export const brandsTemplate = brandsData.map(({id}) => {
 	`
 })
 
-export const product = (title, price, id) => {
+export const product = (title, price, id, key) => {
 	return `
 		<div class="slider-product__slide slide-product">
 			<a href="" class="slide-product__image">
@@ -49,10 +49,11 @@ export const product = (title, price, id) => {
 			<div class="slide-product__price">
 				${price} <span>RUB</span>
 			</div>
+			<button class="add-cart" data-key="${key}">в корзину</button>
 		</div>
 	`
 }
 
-export const productTemplate = prodocutData.map(({title, price, id}) => {
-	return product(title, price, id)
+export const productTemplate = prodocutData.map(({title, price, id, key}) => {
+	return product(title, price, id, key)
 })

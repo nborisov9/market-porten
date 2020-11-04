@@ -1,3 +1,5 @@
+const body = document.querySelector('body')
+
 export function ibg() {
 	const ibg = document.querySelectorAll('.ibg')
 		for (let i = 0; i < ibg.length; i++) {
@@ -20,3 +22,16 @@ export function importAll(r) {
 });
 	return images;
  }
+
+
+ export const disableScroll = () => {
+	body.style.cssText = `
+		position: relative;
+		overflow: hidden;
+		height: 100vh;
+	`
+}
+
+export const enableScroll = () => {
+	body.style.cssText = ``
+}

@@ -1,4 +1,4 @@
-import {ibg, html, importAll} from './utils/utils'
+import {ibg, html, importAll, disableScroll, enableScroll} from './utils/utils'
 import {arrivalTemplate, brandsTemplate, product, productTemplate} from './templates/templates'
 import {prodocutData, collData} from './db/db'
 
@@ -7,6 +7,7 @@ import './#scss/style.scss'
 
 importAll(require.context('./assets', false, /\.(png|jpe?g|svg|gif)$/))
 ibg()
+
 
 const iconMenu = document.querySelector('.icon-menu')
 const menuBody = document.querySelector('.menu__body')
@@ -23,6 +24,15 @@ const wrapperWidth = window.getComputedStyle(wrapperProduct).width
 const arrowAsc = document.querySelector('.btn-slider__asc')
 const arrowDesc = document.querySelector('.btn-slider__desc')
 const collBody = document.querySelector('.prod__body')
+const close = document.querySelector('.close')
+const cart = document.querySelector('.icon__basket')
+const modalCart = document.querySelector('.modal')
+const productMenu = document.querySelector('.slider-product')
+const modalBody = document.querySelector('.modal-body')
+const modalPriceTag = document.querySelector('.modal-pricetag')
+const buttonClearCart = document.querySelector('.clear-cart')
+
+const cartProd = []
 
 
 html(sliderContainer, productTemplate.join(''))
@@ -69,8 +79,8 @@ const sortPriceAsc = () => {
 	arrowDesc.style.color = ''
 	const data = JSON.parse(JSON.stringify(prodocutData))
 	data.sort((a, b) => a.price > b.price ? 1 : -1)
-	const dataTemplate = data.map(({title, price, id}) => {
-		return product(title, price, id)
+	const dataTemplate = data.map(({title, price, id, key}) => {
+		return product(title, price, id, key)
 	})
 
 	sliderContainer.textContent = ''
@@ -82,8 +92,8 @@ const sortPriceDesc = () => {
 	arrowAsc.style.color = ''
 	const data = JSON.parse(JSON.stringify(prodocutData))
 	data.sort((a, b) => a.price > b.price ? -1 : 1)
-	const dataTemplate = data.map(({title, price, id}) => {
-		return product(title, price, id)
+	const dataTemplate = data.map(({title, price, id, key}) => {
+		return product(title, price, id, key)
 	})
 
 	sliderContainer.textContent = ''
@@ -96,7 +106,7 @@ arrowDesc.addEventListener('click', sortPriceDesc)
 
 
 let offset = 0
-const slideChange = (event) => {
+const slideChange = event => {
 	const slideProduct = document.querySelectorAll('.slide-product')
 	const valueWidth = wrapperWidth.length - 2
 	const maxWidth = +wrapperWidth.slice(0, valueWidth) * Math.floor(slideProduct.length / 4)
@@ -121,6 +131,120 @@ const slideChange = (event) => {
 }
 
 
+
+
+
+// cart
+const addToCard = event => {
+	const target = event.target
+	const buttonAddToCart = target.closest('.add-cart')
+	if (buttonAddToCart) {
+		const card = target.closest('.slide-product')
+		const title = card.querySelector('.slide-product__title').textContent
+		const price = card.querySelector('.slide-product__price').textContent
+		const key = buttonAddToCart.dataset.key
+
+		const products = cartProd.find(item => {
+			return item.key === key
+		})
+
+		if (products) {
+			products.count += 1
+		} else {
+			cartProd.push({
+				key,
+				title,
+				price,
+				count: 1
+			})
+		}
+	}
+}
+
+
+const renderCart = () => {
+	modalBody.textContent = ''
+	cartProd.forEach(({key, title, price, count}) => {
+		const itemCart = `
+			<div class="food-row">
+				<span class="food-name">${title}</span>
+				<strong class="food-price">${price}</strong>
+				<div class="food-counter">
+					<button class="counter-button counter-minus" data-key="${key}">-</button>
+					<span class="counter">${count}</span>
+					<button class="counter-button counter-plus" data-key="${key}">+</button>
+				</div>
+			</div>
+		`
+		modalBody.insertAdjacentHTML('afterbegin', itemCart)
+	})
+
+
+	const totalPrice = cartProd.reduce((result, item) => {
+		return result + (parseFloat(item.price)) * item.count
+	}, 0)
+
+	modalPriceTag.textContent = `${totalPrice} ₽`
+}
+
+
+const changeCount = event => {
+	const target = event.target
+	if (target.classList.contains('counter-button')) {
+		const products = cartProd.find(({key}) => {
+			return key === target.dataset.key
+		})
+		if (target.classList.contains('counter-minus')) {
+			products.count--
+			products.count === 0 ? cartProd.splice(cartProd.indexOf(products), 1) : ''
+		}
+		if (target.classList.contains('counter-plus')) {
+			products.count++
+		}
+	}
+	renderCart()
+}
+
+
+const toggleModal = event => {
+	event.preventDefault()
+	modalCart.classList.toggle('is-open')
+	renderCart()
+
+	if (modalCart.classList.contains('is-open')) {
+		disableScroll()
+	} else {
+		enableScroll()
+	}
+}
+
+
+
+
+
+buttonClearCart.addEventListener('click', () => {
+	cartProd.length = 0
+	renderCart()
+ })
+
+modalBody.addEventListener('click', changeCount)
+
+productMenu.addEventListener('click', addToCard)
+
+cart.addEventListener('click', toggleModal)
+
+close.addEventListener('click', toggleModal)
+modalCart.addEventListener('click', event => {
+	if (event.target.classList.contains('is-open')) {
+		modalCart.classList.toggle('is-open')
+		if (modalCart.classList.contains('is-open')) {
+			disableScroll()
+		} else {
+			enableScroll()
+		}
+	}
+})
+
 iconMenu.addEventListener('click', () => {
 	iconMenu.classList.toggle('active')
 	menuBody.classList.toggle('active')
@@ -129,3 +253,4 @@ iconMenu.addEventListener('click', () => {
 
 nextProduct.addEventListener('click', slideChange)
 prevProduct.addEventListener('click', slideChange)
+
