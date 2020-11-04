@@ -1,4 +1,5 @@
-export const collData = [{title: 'Louis XVI ATHOS', price: 165.333, id: 0},
+export const collData = [
+	{title: 'Louis XVI ATHOS', price: 165.333, id: 0},
 	{title: 'Adriatica', price: 99.999, id: 1},
 	{title: 'Cover', price: 49.111, id: 2}
 ]

@@ -1,6 +1,6 @@
 import {ibg, html, importAll} from './utils/utils'
-import {collTemplate, arrivalTemplate, brandsTemplate, product, productTemplate} from './templates/templates'
-import {prodocutData} from './db/db'
+import {arrivalTemplate, brandsTemplate, product, productTemplate} from './templates/templates'
+import {prodocutData, collData} from './db/db'
 
 import './#scss/style.scss'
 
@@ -22,20 +22,46 @@ const innerProduct = document.querySelector('.slider-product__inner')
 const wrapperWidth = window.getComputedStyle(wrapperProduct).width
 const arrowAsc = document.querySelector('.btn-slider__asc')
 const arrowDesc = document.querySelector('.btn-slider__desc')
-
+const collBody = document.querySelector('.prod__body')
 
 
 html(sliderContainer, productTemplate.join(''))
-html(collContainer, collTemplate.join(''))
 html(arrivalContainer, arrivalTemplate.join(''))
 html(brandsContainer, brandsTemplate.join(''))
+// html(collContainer, collTemplate.join(''))
 
-
-iconMenu.addEventListener('click', () => {
-	iconMenu.classList.toggle('active')
-	menuBody.classList.toggle('active')
-	iconSocial.classList.toggle('active')
+const promise = new Promise(resolve => {
+	collBody.textContent = 'Loading...'
+	collBody.style.fontSize = '55px'
+	collBody.style.color = 'rgb(184, 255, 240)'
+	collBody.style.fontFamily = 'Kanit'
+	setTimeout(() => {
+		resolve(collData)
+	}, 4500)
 })
+
+promise.then(data => {
+	const collTemplate = data.map(({title, price, id}) => {
+		return `
+		<div class="prod__item item-prod">
+			<div class="item-prod__img">
+				<a href="">
+					<img src="assets/collection-${id}.jpg" alt="">
+				</a>
+			</div>
+			<a href="" class="item-prod__title">${title}</a>
+			<div class="item-prod__price">${price} <span>RUB</span></div>
+		</div>
+	`
+	})
+	collBody.textContent = ''
+	collBody.style.fontSize = ''
+	collBody.style.color = ''
+	collBody.style.fontFamily = ''
+	html(collContainer, collTemplate.join(''))
+})
+
+
 
 
 const sortPriceAsc = () => {
@@ -93,6 +119,13 @@ const slideChange = (event) => {
 
 	innerProduct.style.transform = `translateX(-${offset}px)`
 }
+
+
+iconMenu.addEventListener('click', () => {
+	iconMenu.classList.toggle('active')
+	menuBody.classList.toggle('active')
+	iconSocial.classList.toggle('active')
+})
 
 nextProduct.addEventListener('click', slideChange)
 prevProduct.addEventListener('click', slideChange)

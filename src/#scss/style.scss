@@ -293,9 +293,8 @@ li {
 		display: flex;
 		@media(max-width: 767px){
 			display: none;
-		  }
-
-		 
+		}
+	 
 
 		&.active {
 			display: flex;
@@ -317,6 +316,10 @@ li {
 							transform: scale(1.2);
 						}
 					}
+					@media(max-width: 450px){
+						font-size: 18px;
+						transform: translate(15px, 0px) rotate(0deg);
+					}
 				}
 			}
 		}
@@ -333,6 +336,11 @@ li {
 							transition: all .1s linear;
 							transform: scale(1.2);
 						}
+					}
+					@media(max-width: 450px){
+						font-size: 18px;
+						margin: 0px 0px 0px 10px;
+						transform: translate(18px, 0px) rotate(0deg);
 					}
 				}
 			}
